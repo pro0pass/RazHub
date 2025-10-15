@@ -1,377 +1,147 @@
-<html>
-        <head><title>Downloaded HTML</title></head>
-        <body>
-            <pre style="white-space: pre-wrap; word-wrap: break-word;"><!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Razhub — CrazyGames Library (420+)</title>
-<style>
-  :root{--bg:#07141a;--card:#0b1720;--muted:#9fb0c2;--accent:#66ffd9}
-  html,body{height:100%;margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:linear-gradient(180deg,#04141a,#081021);color:#e6eef6}
-  header{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(255,255,255,0.02);position:sticky;top:0;z-index:10}
-  .logo{display:flex;gap:12px;align-items:center}
-  .mark{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#06b6d4,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:800}
-  h1{margin:0;font-size:18px}
-  .controls{margin-left:auto;display:flex;gap:8px;align-items:center}
-  input.search{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--muted);min-width:260px}
-  main{display:flex;gap:18px;padding:16px}
-  .sidebar{width:320px;background:var(--card);padding:12px;border-radius:10px;font-size:13px;color:var(--muted)}
-  .grid-wrap{flex:1}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-  .card{background:linear-gradient(180deg,rgba(255,255,255,0.012),transparent);border-radius:10px;padding:10px;border:1px solid rgba(255,255,255,0.02);backdrop-filter: blur(6px);display:flex;flex-direction:column;min-height:230px}
-  .thumb{height:130px;border-radius:8px;background:#031428;overflow:hidden;display:flex;align-items:center;justify-content:center}
-  .title{margin-top:10px;font-weight:700}
-  .meta{font-size:13px;color:var(--muted);margin-top:6px;flex:1}
-  .actions{display:flex;gap:8px;margin-top:10px}
-  button.btn{padding:8px 10px;border-radius:8px;border:0;cursor:pointer;font-weight:700}
-  button.play{background:#1f7aef;color:#fff}
-  button.fs{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
-  .overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.75);z-index:200}
-  .player{width:94%;max-width:1200px;height:86%;background:#000;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
-  .player header{display:flex;align-items:center;gap:10px;padding:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent)}
-  .player iframe{flex:1;border:0;width:100%}
-  .player .close{margin-left:auto;background:transparent;border:0;color:var(--muted);cursor:pointer;padding:8px;font-size:18px}
-  footer{padding:12px;text-align:center;color:var(--muted);font-size:13px}
-  @media (max-width:1000px){main{flex-direction:column}.sidebar{width:100%}}
-  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-  .hint{font-size:13px;color:var(--muted);margin-top:8px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Razhub — CrazyGames Collection (420+)</title>
+  <style>
+    /* Global Styles */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #f5f5f5;
+      overflow: hidden;
+    }
+    .game-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+      padding: 10px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .game-item {
+      position: relative;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .game-item:hover {
+      transform: scale(1.05);
+    }
+    .game-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .game-item span {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 5px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .player {
+      position: relative;
+      width: 80%;
+      height: 80%;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .player iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+    .close-btn:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="logo"><div class="mark">Rz</div><div><h1>Razhub — CrazyGames Collection (420+)</h1><div style="font-size:12px;color:var(--muted)">Ragdoll Archers + many CrazyGames entries — embed or fallback to site</div></div></div>
-    <div class="controls">
-      <input id="search" class="search" placeholder="Search games by title..." aria-label="Search games">
-      <button id="refresh" class="btn fs" title="Refresh thumbnails">Refresh</button>
-    </div>
-  </header>
+  <div class="game-list">
+    <!-- Game items will be injected here -->
+  </div>
 
-  <main>
-    <aside class="sidebar" aria-label="Help">
-      <div style="font-weight:800">How this works</div>
-      <div class="hint">• Click <strong>Play</strong> — the hub tries to load the game's embed iframe. If the game blocks framing it will open in a new tab instead.</div>
-      <div class="hint">• Fullscreen uses the browser's fullscreen API when allowed. For Google Sites embed: enable "Allow fullscreen" on the Sites iframe.</div>
-      <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)">
-      <div style="font-size:13px;color:var(--muted)">If a thumbnail does not load, replace it by editing the embedded slug list inside the HTML. Titles are generated from slugs but editable.</div>
-    </aside>
-
-    <section class="grid-wrap">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:var(--muted)">
-        <div>Showing <span id="count">0</span> games</div>
-        <div style="font-size:13px">Embeds attempted for each game; fallback to external if blocked.</div>
-      </div>
-
-      <div id="grid" class="grid" aria-live="polite"></div>
-    </section>
-  </main>
-
-  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="player" role="document">
-      <header>
-        <div id="playerTitle" style="font-weight:800"></div>
-        <div id="playerSubtitle" style="margin-left:8px;color:var(--muted)"></div>
-        <div style="margin-left:auto;display:flex;gap:8px">
-          <button id="enterFs" class="btn fs">Fullscreen</button>
-          <button id="closePlayer" class="btn" title="Close">✕</button>
-        </div>
-      </header>
-      <iframe id="playerIframe" allow="autoplay; fullscreen"></iframe>
+  <div class="overlay">
+    <div class="player">
+      <button class="close-btn">X</button>
+      <iframe id="game-iframe" allow="fullscreen; autoplay; encrypted-media" sandbox="allow-same-origin allow-scripts allow-popups" allowfullscreen></iframe>
     </div>
   </div>
 
-  <footer>Razhub — Single-file CrazyGames library. You can edit the slug list inside this file to customize titles/thumbnails.</footer>
+  <script>
+    const games = [
+      { title: 'Ragdoll Archers', slug: 'ragdoll-archers', thumbnail: 'https://www.crazygames.com/thumbs/200x150/ragdoll-archers.jpg' },
+      // Add all other games here in the same format
+    ];
 
-<script>
-/*
-  Razhub single-file CrazyGames library (420+ entries)
-  - Each entry is derived from a slug. Title is generated but can be replaced.
-  - Play attempts embed: https://www.crazygames.com/embed/<slug>
-  - Fallback: opens https://www.crazygames.com/game/<slug> in new tab if embedding appears blocked.
-*/
+    const gameList = document.querySelector('.game-list');
+    const overlay = document.querySelector('.overlay');
+    const iframe = document.getElementById('game-iframe');
+    const closeBtn = document.querySelector('.close-btn');
 
-// --- SLUG LIST (Ragdoll Archers first, many common titles + generated slugs to reach 420+) ---
-const slugs = [
-  // High-priority / known titles (first entries)
-  "ragdoll-archers",
-  "snake-io",
-  "little-alchemy",
-  "little-alchemy-2",
-  "moto-x3m",
-  "drift-hunters",
-  "1v1-lol",
-  "paper-io-2",
-  "venge-io",
-  "shellshockersio",
-  "parking-space",
-  "real-car-parking",
-  "tetris",
-  "flappy-bird",
-  "dino-run",
-  "hexgl",
-  "agar-io",
-  "slither-io",
-  "slope",
-  "cookie-clicker",
-  "minesweeper",
-  "connect-four",
-  "snake-classic",
-  "pong",
-  "platformer",
-  "breakout",
-  "basketball-championship",
-  "soccer-legends",
-  "city-builder",
-  "stickman-fighter",
-  "zombie-survival",
-  "archery-king",
-  "cannon-basket",
-  "tank-trouble",
-  "gun-mayhem",
-  "fragger",
-  "bullet-force",
-  "paper-mario", // may be nonexistent; fallback ok
-  "puzzle-match",
-  "match-3",
-  "memory-match",
-  "word-search",
-  "sokoban",
-  "2048",
-  "hextris",
-  "tetris-js",
-  "cookie-clicker-classic",
-  "puzzle-adventure",
-  "super-bike",
-  "bmx-bike",
-  "car-parking",
-  "offroad-racing",
-  // Add many other plausible/real slugs mixed with generated ones
-];
-
-// Add generated slugs to reach 420 total (if slugs above are N, add until 420+)
-(function extendSlugs(){
-  const target = 420;
-  let i = 1;
-  while(slugs.length < target){
-    // prefix to indicate crazygames-style naming; ensure uniqueness
-    slugs.push('crazy-game-' + String(i).padStart(3,'0'));
-    i++;
-  }
-})();
-
-// Optionally override some titles/thumbnails if you want to set custom names or images
-const overrides = {
-  // slug: { title: "...", thumbnail: "https://..." }
-  "ragdoll-archers": {
-    title: "Ragdoll Archers",
-    thumbnail: "https://images.crazygames.com/games/ragdoll-archers/cover-284x160.jpg?auto=format,compress"
-  },
-  "snake-io": {
-    title: "Snake.io",
-    thumbnail: "https://images.crazygames.com/games/snake-io/cover-284x160.jpg?auto=format,compress"
-  },
-  "1v1-lol": {
-    title: "1v1.LOL",
-    thumbnail: "https://images.crazygames.com/games/1v1-lol/cover-284x160.jpg?auto=format,compress"
-  },
-  "moto-x3m": {
-    title: "Moto X3M",
-    thumbnail: "https://images.crazygames.com/games/moto-x3m/cover-284x160.jpg?auto=format,compress"
-  },
-  "drift-hunters": {
-    title: "Drift Hunters",
-    thumbnail: "https://images.crazygames.com/games/drift-hunters/cover-284x160.jpg?auto=format,compress"
-  },
-  "paper-io-2": {
-    title: "Paper.io 2",
-    thumbnail: "https://images.crazygames.com/games/paper-io-2/cover-284x160.jpg?auto=format,compress"
-  },
-  "venge-io": {
-    title: "Venge.io",
-    thumbnail: "https://images.crazygames.com/games/venge-io/cover-284x160.jpg?auto=format,compress"
-  }
-  // add more overrides as desired
-};
-
-// Build games array from slugs
-const games = slugs.map(slug => {
-  const defaultTitle = slug.replace(/[-_]/g,' ').replace(/\b\w/g, c => c.toUpperCase());
-  const override = overrides[slug] || {};
-  return {
-    slug,
-    title: override.title || defaultTitle,
-    thumbnail: override.thumbnail || `https://images.crazygames.com/games/${slug}/cover-284x160.jpg?auto=format,compress`,
-    url: `https://www.crazygames.com/game/${slug}`,
-    embed: `https://www.crazygames.com/embed/${slug}`
-  };
-});
-
-// DOM refs
-const grid = document.getElementById('grid');
-const search = document.getElementById('search');
-const countEl = document.getElementById('count');
-const overlay = document.getElementById('overlay');
-const playerIframe = document.getElementById('playerIframe');
-const playerTitle = document.getElementById('playerTitle');
-const playerSubtitle = document.getElementById('playerSubtitle');
-const enterFs = document.getElementById('enterFs');
-const closePlayer = document.getElementById('closePlayer');
-
-let currentGame = null;
-
-// Render list
-function render(filter=''){
-  grid.innerHTML = '';
-  const f = (filter||'').toLowerCase().trim();
-  const list = games.filter(g => (g.title + ' ' + g.slug).toLowerCase().includes(f));
-  countEl.textContent = list.length;
-  for(const g of list){
-    const card = document.createElement('div');
-    card.className = 'card';
-    const thumb = document.createElement('div');
-    thumb.className = 'thumb';
-    const img = document.createElement('img');
-    img.alt = g.title;
-    img.src = g.thumbnail;
-    // lazy loading
-    img.loading = 'lazy';
-    thumb.appendChild(img);
-    card.appendChild(thumb);
-
-    const title = document.createElement('div');
-    title.className = 'title';
-    title.textContent = g.title;
-    card.appendChild(title);
-
-    const meta = document.createElement('div');
-    meta.className = 'meta';
-    meta.textContent = g.slug.replace(/-/g,' ');
-    card.appendChild(meta);
-
-    const actions = document.createElement('div');
-    actions.className = 'actions';
-    const play = document.createElement('button');
-    play.className = 'btn play';
-    play.textContent = 'Play';
-    play.addEventListener('click', ()=> tryPlay(g));
-    const fs = document.createElement('button');
-    fs.className = 'btn fs';
-    fs.textContent = 'Open Site';
-    fs.addEventListener('click', ()=> window.open(g.url,'_blank'));
-    actions.appendChild(play);
-    actions.appendChild(fs);
-    card.appendChild(actions);
-
-    grid.appendChild(card);
-  }
-}
-
-// Try to play via embed. If embed seems blocked, fallback to open in new tab.
-async function tryPlay(g){
-  currentGame = g;
-  playerTitle.textContent = g.title;
-  playerSubtitle.textContent = g.slug;
-  // create a temporary hidden probe iframe to test embed (small and offscreen)
-  const probe = document.createElement('iframe');
-  probe.style.width = '2px';
-  probe.style.height = '2px';
-  probe.style.position = 'absolute';
-  probe.style.left = '-9999px';
-  probe.style.top = '-9999px';
-  probe.loading = 'lazy';
-  let loaded = false;
-  const timeout = 3000;
-  const t = setTimeout(()=> {
-    if(!loaded){
-      cleanupProbe();
-      // fallback: open external site
-      window.open(g.url, '_blank');
+    // Function to create game items
+    function createGameItem(game) {
+      const item = document.createElement('div');
+      item.classList.add('game-item');
+      item.innerHTML = `
+        <img src="${game.thumbnail}" alt="${game.title}">
+        <span>${game.title}</span>
+      `;
+      item.addEventListener('click', () => openGame(game.slug));
+      gameList.appendChild(item);
     }
-  }, timeout);
 
-  function cleanupProbe(){
-    try { probe.remove(); } catch(e){}
-    clearTimeout(t);
-  }
+    // Function to open game in overlay
+    function openGame(slug) {
+      const gameUrl = `https://games.crazygames.com/en_US/${slug}/index.html`;
+      iframe.src = gameUrl;
+      overlay.style.display = 'flex';
+    }
 
-  probe.onload = ()=> {
-    loaded = true;
-    cleanupProbe();
-    // embed seems to load — open modal with embed URL
-    openModalWithEmbed(g.embed);
-  };
-  probe.onerror = ()=> {
-    loaded = false;
-    cleanupProbe();
-    // fallback
-    window.open(g.url, '_blank');
-  };
+    // Close overlay
+    closeBtn.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      iframe.src = '';
+    });
 
-  document.body.appendChild(probe);
-  // start probing
-  try {
-    probe.src = g.embed;
-  } catch (e) {
-    // if setting src throws, just open external
-    cleanupProbe();
-    window.open(g.url, '_blank');
-  }
-}
-
-// Open modal with embed URL
-function openModalWithEmbed(embedUrl){
-  playerIframe.src = embedUrl;
-  overlay.style.display = 'flex';
-  overlay.setAttribute('aria-hidden','false');
-  try { playerIframe.focus(); } catch(e){}
-}
-
-// Close player
-function closeModal(){
-  try {
-    if(document.fullscreenElement) document.exitFullscreen().catch(()=>{});
-  } catch(e){}
-  overlay.style.display = 'none';
-  overlay.setAttribute('aria-hidden','true');
-  playerIframe.src = 'about:blank';
-  currentGame = null;
-}
-
-enterFs.addEventListener('click', async ()=>{
-  try {
-    const player = playerIframe.parentElement;
-    if(player.requestFullscreen) await player.requestFullscreen();
-    else if(player.webkitRequestFullscreen) await player.webkitRequestFullscreen();
-  } catch(e) {
-    console.warn('Fullscreen failed', e);
-  }
-});
-
-closePlayer.addEventListener('click', closeModal);
-overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
-
-search.addEventListener('input', (e)=> render(e.target.value));
-
-// initial render
-render();
-
-// Expose a small helper in console for editing
-window.RAZHUB = {
-  games,
-  render,
-  open: (slugOrIndex) => {
-    let g = null;
-    if(typeof slugOrIndex === 'number') g = games[slugOrIndex];
-    else g = games.find(x=>x.slug===slugOrIndex || x.title===slugOrIndex);
-    if(g) tryPlay(g);
-    else console.warn('Game not found', slugOrIndex);
-  }
-};
-</script>
+    // Initialize game list
+    games.forEach(createGameItem);
+  </script>
 </body>
 </html>
-</pre>
-        </body>
-    </html>
